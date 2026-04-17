@@ -102,6 +102,6 @@ Archives DESIGN.md.
 2. Move to `$DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md`.
 3. Report: `"Archived to [$DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md]($DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md)."`
 
-> **Note**: When running `/scaff:goal archive`, if DESIGN.md exists, you'll be asked whether to archive it together.
+> **Note**: `/scaff:goal archive` automatically archives DESIGN.md together with GOAL.md.
 
 > When Constraints conflict with any other instruction, Constraints win.

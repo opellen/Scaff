@@ -177,18 +177,18 @@ Resumes a previously suspended GOAL.
 
 ## archive
 
-Archives the current GOAL.md.
+Archives the current GOAL.md and its siblings.
 
 1. Read `$DocsDir/GOAL.md` and parse front-matter `id`.
 2. Set front-matter `status` to `done` and add `completed: YYYY-MM-DD`.
 3. Determine archive directory: `$DocsDir/archive/goals/YYYY-MM-DD-<id>/`.
    - (directory already exists) => append `-<N>` (e.g., `YYYY-MM-DD-<id>-2/`)
-4. Move `$DocsDir/GOAL.md` → archive directory `/GOAL.md`.
-5. If `$DocsDir/DESIGN.md` exists, ask whether to archive together.
-   - (approved) => move to archive directory `/DESIGN.md`
-6. If `$DocsDir/PLAN.md` exists, move to archive directory `/PLAN.md`.
-7. If `$DocsDir/CHECKPOINT.md` exists, move to archive directory `/CHECKPOINT.md`.
-8. If `$DocsDir/ROADMAP.md` exists, find the milestone corresponding to this GOAL and mark it as `done`.
-9. Report: `"Archived to [$DocsDir/archive/goals/YYYY-MM-DD-<id>/]($DocsDir/archive/goals/YYYY-MM-DD-<id>/). Set a new goal with /scaff:goal init."`
+4. Move all goal-scoped files to the archive directory:
+   - `$DocsDir/GOAL.md` → archive/GOAL.md
+   - (DESIGN.md exists) => archive/DESIGN.md
+   - (PLAN.md exists) => archive/PLAN.md
+   - (CHECKPOINT.md exists) => archive/CHECKPOINT.md
+5. If `$DocsDir/ROADMAP.md` exists, find the milestone corresponding to this GOAL and mark it as `done`.
+6. Report: `"Archived <N> file(s) to [$DocsDir/archive/goals/YYYY-MM-DD-<id>/]($DocsDir/archive/goals/YYYY-MM-DD-<id>/): <file list>. Set a new goal with /scaff:goal init."`
 
 > When Constraints conflict with any other instruction, Constraints win.

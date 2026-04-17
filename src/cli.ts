@@ -10,6 +10,7 @@ import { selectPlatforms } from "./prompts/platform-select.js";
 import { t } from "./i18n/index.js";
 import chalk from "chalk";
 import { brand } from "./ui/colors.js";
+import { extend } from "./extend.js";
 
 function printUsage(): void {
   console.log(`
@@ -17,6 +18,7 @@ scaff — Lightweight context scaffolding for AI coding
 
 Usage:
   scaff init [options]
+  scaff extend <path> [--force] [--root <dir>]
 
 Options:
   --docs <dir>      Documentation directory (default: docs)
@@ -28,11 +30,16 @@ Options:
   --force           Overwrite existing files without prompting
   --dry-run         Preview without writing files
   -h, --help        Show this help
+
+Commands:
+  init              Install scaff into the current project
+  extend <path>     Install a local extension (reads <path>/scaff-extend.yml)
 `);
 }
 
 function parseArgs(argv: string[]): {
   command: string | null;
+  positional: string[];
   docsDir: string;
   codebaseDir: string;
   tools: string[] | null;
@@ -43,6 +50,7 @@ function parseArgs(argv: string[]): {
   help: boolean;
 } {
   let command: string | null = null;
+  const positional: string[] = [];
   let docsDir = "docs";
   let codebaseDir = ".";
   let tools: string[] | null = null;
@@ -101,7 +109,11 @@ function parseArgs(argv: string[]): {
       }
       root = resolve(next);
     } else if (!arg.startsWith("-")) {
-      command = arg;
+      if (command === null) {
+        command = arg;
+      } else {
+        positional.push(arg);
+      }
     } else {
       console.error(`Unknown option: ${arg}`);
       printUsage();
@@ -109,7 +121,59 @@ function parseArgs(argv: string[]): {
     }
   }
 
-  return { command, docsDir, codebaseDir, tools, subagent, root, force, dryRun: isDryRun, help };
+  return { command, positional, docsDir, codebaseDir, tools, subagent, root, force, dryRun: isDryRun, help };
+}
+
+async function runExtend(args: {
+  positional: string[];
+  root: string;
+  force: boolean;
+}): Promise<void> {
+  const extPath = args.positional[0];
+  if (!extPath) {
+    console.error("Error: scaff extend requires a path argument");
+    printUsage();
+    process.exit(1);
+  }
+  const resolvedExt = resolve(extPath);
+  if (!existsSync(resolvedExt)) {
+    console.error(`Error: extension path does not exist: ${resolvedExt}`);
+    process.exit(1);
+  }
+  if (!existsSync(args.root)) {
+    console.error(`Error: target directory does not exist: ${args.root}`);
+    process.exit(1);
+  }
+
+  try {
+    const result = await extend(resolvedExt, {
+      force: args.force,
+      root: args.root,
+    });
+
+    if (result.commandsAdded.length > 0) {
+      console.log(
+        `${chalk.green("\u2713")} Commands added: ${result.commandsAdded.join(", ")}`,
+      );
+    }
+    if (result.commandsSkipped.length > 0) {
+      console.log(
+        `${chalk.yellow("~")} Commands skipped: ${result.commandsSkipped.join(", ")}`,
+      );
+    }
+    if (result.hooksApplied.length > 0) {
+      console.log(
+        `${chalk.green("\u2713")} Hooks applied: ${result.hooksApplied.join(", ")}`,
+      );
+    }
+    if (result.dependenciesChecked.length > 0) {
+      console.log(`${chalk.green("\u2713")} Dependencies: all found`);
+    }
+    process.exit(0);
+  } catch (err) {
+    console.error(`Error: ${(err as Error).message}`);
+    process.exit(1);
+  }
 }
 
 async function main(): Promise<void> {
@@ -118,6 +182,11 @@ async function main(): Promise<void> {
   if (args.help || !args.command) {
     printUsage();
     process.exit(args.help ? 0 : 1);
+  }
+
+  if (args.command === "extend") {
+    await runExtend(args);
+    return;
   }
 
   if (args.command !== "init") {
