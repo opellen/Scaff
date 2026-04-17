@@ -42,9 +42,9 @@ Creates `$DocsDir/GOAL.md`.
 2. If empty, derive from the current session discussion.
 3. If GOAL.md already exists, notify the user and confirm overwrite.
 4. Write GOAL.md with the format below.
-5. Assess whether breakdown is needed:
+5. Assess task granularity:
    - (tasks are complex, embed multiple implicit steps) => recommend `/scaff:goal breakdown` with 1-line rationale
-   - (tasks are already specific and actionable) => recommend proceeding directly with 1-line rationale
+   - (tasks are specific and actionable) => recommend `/scaff:design init` (implementation task) or `/scaff:go` (analysis task) with 1-line rationale
 6. Report: `"Created [GOAL.md]($DocsDir/GOAL.md)."`
 
 GOAL.md format:
@@ -104,9 +104,9 @@ Usage: `/scaff:goal breakdown [task-number]`
 6. Update GOAL.md.
    - (target task already has sub-tasks) => ask user whether to merge or replace before writing
 7. Report: `"Updated [GOAL.md]($DocsDir/GOAL.md) — decomposed <N> task(s) into <M> sub-tasks."`
-8. Assess whether `/scaff:design init` is needed:
+8. Assess design necessity:
    - (sub-tasks include code implementation, file changes, or architecture decisions) => recommend `/scaff:design init` with 1-line rationale
-   - (sub-tasks are analysis/RE/investigation focused) => recommend proceeding directly with 1-line rationale
+   - (sub-tasks are analysis/RE/investigation focused) => recommend `/scaff:go` with 1-line rationale
 
 ## checkpoint
 
