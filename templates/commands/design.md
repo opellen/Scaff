@@ -1,0 +1,107 @@
+---
+name: "scaff:design"
+description: "Implementation design (DESIGN.md) management (init|sync|archive)"
+category: Workflow
+tags: [workflow, scaff, design]
+---
+
+# scaff:design
+
+Manages `$DocsDir/DESIGN.md`. Records the **implementation design** for the current GOAL.
+
+> If GOAL.md is "what/why", DESIGN.md is "how".
+> Documents implementation plans, file change lists, key design decisions — implementation details that would be lost if only in chat.
+
+## Lifecycle
+
+DESIGN.md is paired 1:1 with GOAL.md:
+- Created after GOAL.md when an implementation plan emerges
+- Archived together with GOAL.md
+
+## Constraints
+
+- Never overwrite DESIGN.md without user confirmation.
+- DESIGN.md requires a corresponding GOAL.md — do not create without one.
+
+> When Constraints conflict with any other instruction, Constraints win.
+
+## Usage
+
+`/scaff:design <subcommand> [content]`
+
+## Subcommand Dispatch
+
+- (args = init) => see Subcommands: init
+- (args = sync) => see Subcommands: sync
+- (args = archive) => see Subcommands: archive
+- (args unclear, no subcommand) => prompt the user to choose init, sync, or archive
+
+# Subcommands
+
+## init
+
+Creates `$DocsDir/DESIGN.md`.
+
+1. Read `$DocsDir/GOAL.md`. A file read error means the file does not exist — **do NOT retry failed reads.** If absent, suggest setting a goal first.
+2. Parse GOAL.md `id` and `goal` for context.
+   - If GOAL.md has sub-tasks (from breakdown), note them as context for structuring the Execution Order.
+3. If `$ARGUMENTS` has content, incorporate it.
+4. Write based on the implementation plan discussed in the current session.
+5. If DESIGN.md already exists, notify and confirm overwrite.
+6. Report: `"Created [DESIGN.md]($DocsDir/DESIGN.md)."`
+   - (GOAL.md has breakdown sub-tasks AND Execution Order structure differs significantly) => also notify: `"Execution Order differs from GOAL.md sub-task structure. Run /scaff:goal breakdown to adjust if needed."`
+
+**Structure:**
+
+```markdown
+---
+goal-id: <GOAL.md id>
+created: YYYY-MM-DD
+---
+
+# Implementation Plan
+
+## Files to Change
+
+| File | Change | Description |
+|------|--------|-------------|
+| ... | new/modify | ... |
+
+## Key Design Decisions
+
+### 1. <Component/Module>
+- Design decision and rationale
+
+## Execution Order
+1. ...
+2. ...
+```
+
+Extend with project-appropriate sections.
+
+## sync
+
+Reviews current DESIGN.md and **proposes updates**.
+
+1. Read `$DocsDir/DESIGN.md`. If absent, suggest init.
+2. If `$ARGUMENTS` has content, use it as update direction.
+3. Identify changes from the current session:
+   - New design decisions
+   - Updated file change list
+   - Modified execution order
+   - Design changes from trial-and-error
+4. Present changes in **diff format**.
+5. Apply the changes.
+6. Report: `"Updated [DESIGN.md]($DocsDir/DESIGN.md)."`
+
+## archive
+
+Archives DESIGN.md.
+
+1. Parse `goal-id` from `$DocsDir/DESIGN.md` front-matter.
+2. Move to `$DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md`.
+3. Report: `"Archived to [$DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md]($DocsDir/archive/goals/YYYY-MM-DD-<goal-id>/DESIGN.md)."`
+
+> **Note**: When running `/scaff:goal archive`, if DESIGN.md exists, you'll be asked whether to archive it together.
+
+> When Constraints conflict with any other instruction, Constraints win.
