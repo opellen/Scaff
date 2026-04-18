@@ -26,6 +26,8 @@ Manages `$DocsDir/ROADMAP.md`. Records the project's **high-level execution plan
 
 ## Subcommand Dispatch
 
+- (no subcommand given, `$DocsDir/ROADMAP.md` absent) => run init
+- (no subcommand given, `$DocsDir/ROADMAP.md` exists) => prompt the user to choose
 - (args = init) => see Subcommands: init
 - (args = add) => see Subcommands: add
 - (args = archive) => see Subcommands: archive

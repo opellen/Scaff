@@ -43,7 +43,9 @@ Markdown commands are installed in your project. No CLI needed after this.
 ```
 
 Whether it's a new project or an existing codebase, scout reads the current state and guides you to the next step.
-Got existing code? It starts with context setup (`/scaff:context init`). Empty project? It starts by exploring your idea through conversation.
+Got existing code? It starts with context setup (`/scaff:context`). Empty project? It starts by exploring your idea through conversation.
+
+Most commands auto-run `init` on first use — `/scaff:goal "my goal"` works immediately without typing `init`.
 
 ### Options
 
@@ -167,6 +169,18 @@ started: 2026-03-01
 | `/scaff:verify` | Verify consistency across goal, design, and implementation |
 | `/scaff:recap` | Session wrap-up — sync decisions into living documents |
 
+### Invocation
+
+You don't always need to type `/scaff:` — when intent is clear from context, natural language works too.
+
+| Path | `/scaff` required? | Example |
+|------|-------------------|---------|
+| **Explicit invocation** | Yes | `/scaff goal init`, `/scaff:goal init & design init` |
+| **Confirming a recent recommendation** | No | AI: "Recommend `/scaff:goal init`" → User: "ok" / "go" |
+| **Continuation in active flow** | No | (after goal init) User: "breakdown now" |
+
+With clear context, natural language alone triggers execution. `/scaff` serves as an escape hatch when context is ambiguous.
+
 ## Usage flow
 
 ### Applying to an existing project
@@ -174,15 +188,15 @@ started: 2026-03-01
 ```
 You: /scaff:scout
 AI:  Found an existing codebase. No CONTEXT.md yet.
-     Set up project context with `/scaff:context init`?
+     Set up project context with `/scaff:context`?
 
 You: /scaff:context init
 AI:  ✓ docs/CONTEXT.md created
      To set a goal: `/scaff:goal init`
 
-You: /scaff:goal init Migrate auth module from JWT to session-based
+You: /scaff:goal Migrate auth module from JWT to session-based
 AI:  ✓ docs/GOAL.md created (5 tasks)
-     This is an implementation task. Start with `/scaff:design init`?
+     Recommend `/scaff:design init` — implementation task with file-level decisions.
 
 You: /scaff:design init
 AI:  ✓ docs/DESIGN.md created
@@ -208,7 +222,7 @@ AI:  ✓ docs/ROADMAP.md created
      ├── M2: Real-time sync (CRDT)
      └── M3: Deployment & infrastructure
 
-You: /scaff:goal init
+You: /scaff:goal
 AI:  Selecting M1 from ROADMAP.md.
      ✓ docs/GOAL.md created
 
@@ -230,9 +244,9 @@ AI:  ✓ docs/CHECKPOINT.md saved
      ... (continue in next session, all tasks complete)
 
 You: /scaff:goal archive
-AI:  ✓ M1 archived (saved to archive/goals/2026-04-04-editor-core/)
-     Marked M1 as done in ROADMAP.md.
-     Set the next goal?
+AI:  ✓ Archived 4 files to docs/archive/goals/2026-04-04-editor-core/
+     (GOAL.md, DESIGN.md, PLAN.md, CHECKPOINT.md)
+     Marked M1 done in ROADMAP.md.
 ```
 
 ### Resuming work

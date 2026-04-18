@@ -24,7 +24,8 @@ Manages `$DocsDir/GOAL.md`.
 
 ## Subcommand Dispatch
 
-- (no subcommand given) => prompt the user to choose
+- (no subcommand given, `$DocsDir/GOAL.md` absent) => run init
+- (no subcommand given, `$DocsDir/GOAL.md` exists) => prompt the user to choose
 - (args = init) => see Subcommands: init
 - (args = breakdown) => see Subcommands: breakdown
 - (args = checkpoint) => see Subcommands: checkpoint

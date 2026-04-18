@@ -46,6 +46,8 @@ npx @opellen/scaff init
 새 프로젝트든 기존 코드베이스든, scout이 현재 상태를 파악하고 다음 단계를 안내합니다.
 기존 코드가 있다면 맥락 설정(`/scaff:context init`)부터, 빈 프로젝트라면 대화를 통해 방향을 잡는 것부터 시작합니다.
 
+대부분의 커맨드는 첫 사용 시 `init`이 자동 실행됩니다 — `/scaff:goal "목표"` 만으로 `init` 타이핑 없이 바로 동작합니다.
+
 ### 옵션
 
 ```bash
@@ -168,6 +170,18 @@ started: 2026-03-01
 | `/scaff:verify` | 목표, 설계, 구현의 정합성 검증 |
 | `/scaff:recap` | 세션 마무리 — 논의된 결정을 문서에 반영 |
 
+### 호출 방식
+
+맥락이 명확하면 `/scaff:`를 매번 타이핑하지 않아도 됩니다 — 자연어로도 실행 가능합니다.
+
+| 경로 | `/scaff` 필요? | 예시 |
+|------|---------------|------|
+| **명시적 호출** | 필요 | `/scaff goal init`, `/scaff:goal init & design init` |
+| **직전 제안 확인** | 불필요 | AI: "`/scaff:goal init` 권장" → User: "ok" / "진행해" |
+| **연속 맥락 서술** | 불필요 | (goal init 직후) User: "breakdown now" |
+
+맥락이 명확하면 자연어만으로 실행됩니다. `/scaff`는 맥락이 모호할 때 쓰는 명시적 호출 수단입니다.
+
 ## 사용 흐름
 
 ### 기존 프로젝트에 적용
@@ -181,9 +195,9 @@ You: /scaff:context init
 AI:  ✓ docs/CONTEXT.md 생성 완료
      목표를 설정하려면 `/scaff:goal init`
 
-You: /scaff:goal init 인증 모듈을 JWT에서 세션 기반으로 전환
+You: /scaff:goal 인증 모듈을 JWT에서 세션 기반으로 전환
 AI:  ✓ docs/GOAL.md 생성 완료 (5개 태스크)
-     구현 태스크입니다. `/scaff:design init`으로 설계를 먼저 잡을까요?
+     `/scaff:design init` 권장 — 파일 수준 결정이 필요한 구현 태스크입니다.
 
 You: /scaff:design init
 AI:  ✓ docs/DESIGN.md 생성 완료
@@ -209,7 +223,7 @@ AI:  ✓ docs/ROADMAP.md 생성 완료
      ├── M2: 실시간 동기화 (CRDT)
      └── M3: 배포 및 인프라
 
-You: /scaff:goal init
+You: /scaff:goal
 AI:  ROADMAP.md에서 M1을 선택합니다.
      ✓ docs/GOAL.md 생성 완료
 
@@ -231,9 +245,9 @@ AI:  ✓ docs/CHECKPOINT.md 저장 완료
      ... (다음 세션에서 이어서 작업, 모든 태스크 완료)
 
 You: /scaff:goal archive
-AI:  ✓ M1 아카이브 완료 (archive/goals/2026-04-04-editor-core/에 저장)
+AI:  ✓ docs/archive/goals/2026-04-04-editor-core/에 4개 파일 아카이브
+     (GOAL.md, DESIGN.md, PLAN.md, CHECKPOINT.md)
      ROADMAP.md에서 M1을 done으로 표시했습니다.
-     다음 목표를 설정할까요?
 ```
 
 ### 이어서 작업
