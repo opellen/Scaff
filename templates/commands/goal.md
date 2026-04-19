@@ -167,7 +167,8 @@ Resumes a previously suspended GOAL.
 2. Process suspended goals list:
    - (none found) => report "No suspended goals."
    - (exactly one) => auto-select it
-   - (multiple) => present list for user selection
+   - (multiple, session context permits a confident recommendation) => present list with a single recommendation per `scaff-flow` User Decision Support (Recommendation + Basis + GOAL relevance)
+   - (multiple, no clear context) => present list for user selection
 3. Move `$DocsDir/suspended/<goal-id>/GOAL.md` → `$DocsDir/GOAL.md`.
 4. If `CHECKPOINT.md` exists in the suspended folder, move it → `$DocsDir/CHECKPOINT.md`.
 5. If `DESIGN.md` exists in the suspended folder, move it → `$DocsDir/DESIGN.md`.

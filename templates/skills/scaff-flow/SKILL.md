@@ -66,6 +66,16 @@ When the trigger fires:
 - (sequential analysis of multiple functions/modules, intermediate results accumulating) => suggest `/scaff:goal checkpoint`
 - (before ending a session) => suggest `/scaff:goal checkpoint`
 
+## Blocker Handling
+
+When the current goal cannot proceed (discovered bug, missing dependency, blocking issue):
+
+- (blocker identified, current GOAL cannot progress) => suggest `/scaff:goal suspend` followed by `/scaff:goal "<blocker description>"` to address the blocker as its own goal
+- (blocker goal archived, suspended goals remain) => suggest `/scaff:goal resume` to continue a suspended goal
+- (nested blockers) => same pattern recursively; `suspended/<goal-id>/` stacks naturally, `resume` presents a list when multiple
+
+This preserves "one active GOAL.md at a time" — simpler than in-place stacking schemes.
+
 ## Self-Verification
 
 Before checking off a GOAL.md task or ROADMAP.md milestone as "done", verify:
@@ -91,7 +101,7 @@ Before checking off a GOAL.md task or ROADMAP.md milestone as "done", verify:
 When responding to the user with multiple options — implementation choices, next scaff step, design alternatives, or any decision branching — include:
 
 1. **Recommendation** — Highlight one option with rationale.
-2. **Basis** — 1-line expected outcome and risk for each option.
+2. **Basis** — 1-line expected outcome (and tradeoff if any).
 3. **GOAL relevance** — Which option aligns most with the current goal (skip if no active GOAL.md).
 
 > When Constraints conflict with any other instruction, Constraints win.
