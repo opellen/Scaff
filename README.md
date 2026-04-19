@@ -258,6 +258,25 @@ AI:  CONTEXT.md ✓ | GOAL.md ✓ (3/5 complete)
      Resume with `/scaff:go`?
 ```
 
+### Handling blockers
+
+When something comes up mid-goal that must be fixed first:
+
+```
+You: (during Goal A) Let's fix this dependency bug first.
+AI:  Suggest: /scaff:goal suspend + /scaff:goal "Fix dependency bug"
+You: ok
+AI:  ✓ Goal A suspended to docs/suspended/goal-a/
+     ✓ New GOAL.md created for the blocker.
+
+     ... (work through the blocker, archive when done)
+
+You: /scaff:goal resume
+AI:  Resumed: Goal A. Continue with /scaff:go?
+```
+
+Nested blockers follow the same pattern — suspend stacks, resume presents a list when multiple goals are paused.
+
 ## From the **gap**
 
 > **Heavy workflows weren't always necessary.**

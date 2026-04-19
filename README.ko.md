@@ -259,6 +259,25 @@ AI:  CONTEXT.md ✓ | GOAL.md ✓ (3/5 완료)
      `/scaff:go`로 이어서 진행할까요?
 ```
 
+### 블로커 대응
+
+골 진행 중 먼저 해결해야 할 일이 생겼을 때:
+
+```
+You: (Goal A 진행 중) 이 의존성 버그 먼저 고치자.
+AI:  추천: /scaff:goal suspend + /scaff:goal "의존성 버그 수정"
+You: ok
+AI:  ✓ Goal A를 docs/suspended/goal-a/로 중단 보관
+     ✓ 블로커용 새 GOAL.md 생성
+
+     ... (블로커 작업 → 완료 시 archive)
+
+You: /scaff:goal resume
+AI:  Goal A 복귀. `/scaff:go`로 이어서 진행할까요?
+```
+
+중첩 블로커도 동일 패턴 — suspend가 쌓이고, 여러 골이 중단 중이면 resume이 목록을 보여줍니다.
+
 ## **틈새**에서
 
 > **무거운 워크플로우가 항상 필요하지는 않았습니다.**
