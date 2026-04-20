@@ -12,6 +12,8 @@ metadata:
 ## Constraints
 
 - Main agent analyzes and coordinates — delegate implementation and exploration to subagents.
+- Analysis (cause identification, root-cause determination, fix approach recommendation) is always main agent's job. Subagents gather facts and execute — they do not synthesize judgment.
+- (subagent dispatch without main having invoked Read/Grep on source files in its own turn this session) => stop, read first
 - (subagent prompt missing any required element) => do not dispatch until complete (see Prompt Requirements)
 - (5+ consecutive Read/Grep without Edit/Write) => stop and report to user
 - A subagent's "done" is a claim, not a fact — main verifies before accepting.
@@ -25,11 +27,20 @@ metadata:
 - (subagents available, e.g. Claude Code, Codex) => delegate tasks to subagents per workflow below
 - (subagents not available) => execute tasks inline directly — apply Task Complexity Dispatch for work breakdown and Post-Verify after each task; prompt/status/model sections do not apply
 
+## Subagent Role Dispatch
+
+- (cause identification, root-cause, fix approach recommendation) => main only, never delegated
+- (file/keyword search, call chain tracing) => search/tracing subagent OK
+- (implementation of a decided fix) => execute subagent OK
+
+Scout subagents gather facts. They do not state causes or recommend fixes.
+
 ## Task Complexity Dispatch
 
 - (1-line fix, typo) => main agent fixes directly
 - (single file, clear change, < 30 lines) => one subagent, skip post-verify
-- (multi-file or design judgment needed) => full workflow (Scout → Split → Execute)
+- (multi-file or design judgment needed, scout not done) => main reads source and analyzes first
+- (multi-file or design judgment needed, scout done) => dispatch subagents for split execution
 - (otherwise) => ask user for scope guidance
 
 ## Subagent Prompt Requirements
@@ -78,16 +89,14 @@ Ask-first: If anything is unclear, ask before starting.
 
 ### Phase 1 — Scout
 
-Before dispatching any subagent, main must complete scoping:
+#### Required (main only)
+1. Identify candidate files (keyword search, trace from entry point).
+2. Read candidate files in parallel — invoke Read/Grep in main's own turn, not receiving summaries from a subagent.
+3. Identify cause and define scope.
 
-1. Identify candidate files related to the task (search by keyword, trace from entry point).
-2. Read candidate files in parallel (batch all reads at once, do NOT read one-by-one). Extract relevant sections.
-3. Define the investigation scope (files, modules, boundaries).
-
-Only then:
-4. Construct subagent prompt with all seven required elements, including source from step 2 as Context.
-5. Dispatch one exploratory subagent.
-6. Receive findings and assess scope for splitting.
+#### Optional (subagent, only if main's scope insufficient)
+- (codebase too wide for main to cover in this turn) => dispatch search/tracing subagent with explicit paths from step 1
+- (main answered its questions) => skip, proceed to Phase 2
 
 ### Phase 2 — Split
 
@@ -127,6 +136,7 @@ Main agent confirms subagent output before marking a task complete:
 
 - (implementation task) => read changed files, compare against GOAL.md task description
 - (exploration/analysis task) => spot-check 1-2 key claims against the codebase
+- (subagent returned unrequested analysis — cause, recommendation, judgment) => main re-does the analysis from source; subagent's synthesis is advisory only
 - (trivial fix) => skip
 
 > When Constraints conflict with any other instruction, Constraints win.
