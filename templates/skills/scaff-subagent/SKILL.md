@@ -31,6 +31,7 @@ metadata:
 ## Subagent Role Dispatch
 
 - (cause identification, root-cause, fix approach recommendation) => main only, never delegated
+- (work requiring incremental user verification or collaborative iteration — e.g., UI/UX changes, exploratory refactoring, evolving design) => main only
 - (file/keyword search, call chain tracing) => search/tracing subagent OK
 - (implementation of a decided fix) => execute subagent OK
 
