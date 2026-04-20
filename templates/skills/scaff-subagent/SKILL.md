@@ -13,6 +13,7 @@ metadata:
 
 - Main agent analyzes and coordinates — delegate implementation and exploration to subagents.
 - Analysis (cause identification, root-cause determination, fix approach recommendation) is always main agent's job. Subagents gather facts and execute — they do not synthesize judgment.
+- Before dispatching execution subagents for a fix involving root-cause reasoning (not trivial typo/rename), present root cause and fix approach to the user; dispatch only after explicit approval.
 - (subagent dispatch without main having invoked Read/Grep on source files in its own turn this session) => stop, read first
 - (subagent prompt missing any required element) => do not dispatch until complete (see Prompt Requirements)
 - (5+ consecutive Read/Grep without Edit/Write) => stop and report to user
@@ -41,6 +42,7 @@ Scout subagents gather facts. They do not state causes or recommend fixes.
 - (single file, clear change, < 30 lines) => one subagent, skip post-verify
 - (multi-file or design judgment needed, scout not done) => main reads source and analyzes first
 - (multi-file or design judgment needed, scout done) => dispatch subagents for split execution
+- (2nd iteration on same work area after a subagent fix, OR user indicates need for inline collaboration) => main agent executes inline (subagents lack stop/resume; iterative collaboration needs inline turns)
 - (otherwise) => ask user for scope guidance
 
 ## Subagent Prompt Requirements
