@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import { resolve } from "node:path";
 import {
   createPrompt,
   useState,
@@ -14,7 +12,7 @@ import {
   isEnterKey,
 } from "@inquirer/core";
 import chalk from "chalk";
-import { getAllAdapters, DEFAULT_PLATFORM } from "../platforms/index.js";
+import { getAllAdapters, detectInstalledPlatforms, DEFAULT_PLATFORM } from "../platforms/index.js";
 import { t } from "../i18n/index.js";
 import { brand } from "../ui/colors.js";
 
@@ -31,18 +29,8 @@ interface PlatformSelectConfig {
 
 const PAGE_SIZE = 15;
 
-function detectPlatforms(projectRoot: string): Set<string> {
-  const detected = new Set<string>();
-  for (const adapter of getAllAdapters()) {
-    if (existsSync(resolve(projectRoot, adapter.configDir))) {
-      detected.add(adapter.id);
-    }
-  }
-  return detected;
-}
-
 function buildChoices(projectRoot: string): Choice[] {
-  const detected = detectPlatforms(projectRoot);
+  const detected = new Set(detectInstalledPlatforms(projectRoot));
   const adapters = getAllAdapters();
 
   const choices: Choice[] = adapters.map((a) => ({

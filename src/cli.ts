@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { existsSync } from "node:fs";
 import { install, dryRun } from "./installer.js";
 import type { ScaffConfig } from "./templates.js";
-import { PLATFORM_IDS, DEFAULT_PLATFORM, isValidPlatform } from "./platforms/index.js";
+import { PLATFORM_IDS, DEFAULT_PLATFORM, isValidPlatform, detectInstalledPlatforms } from "./platforms/index.js";
 import { showWelcome } from "./ui/welcome.js";
 import { selectPlatforms } from "./prompts/platform-select.js";
 import { t } from "./i18n/index.js";
@@ -28,6 +28,7 @@ Options:
   --no-subagent     Disable subagent delegation (enabled by default)
   --root <dir>      Target directory (default: cwd)
   --force           Overwrite existing files without prompting
+  -y, --yes         Auto-confirm with detected platforms (skip interactive selection)
   --dry-run         Preview without writing files
   -h, --help        Show this help
 
@@ -46,6 +47,7 @@ function parseArgs(argv: string[]): {
   subagent: boolean;
   root: string;
   force: boolean;
+  yes: boolean;
   dryRun: boolean;
   help: boolean;
 } {
@@ -57,6 +59,7 @@ function parseArgs(argv: string[]): {
   let subagent = true;
   let root = process.cwd();
   let force = false;
+  let yes = false;
   let isDryRun = false;
   let help = false;
 
@@ -99,6 +102,8 @@ function parseArgs(argv: string[]): {
       subagent = false;
     } else if (arg === "--force") {
       force = true;
+    } else if (arg === "-y" || arg === "--yes") {
+      yes = true;
     } else if (arg === "--dry-run") {
       isDryRun = true;
     } else if (arg === "--root") {
@@ -121,7 +126,7 @@ function parseArgs(argv: string[]): {
     }
   }
 
-  return { command, positional, docsDir, codebaseDir, tools, subagent, root, force, dryRun: isDryRun, help };
+  return { command, positional, docsDir, codebaseDir, tools, subagent, root, force, yes, dryRun: isDryRun, help };
 }
 
 async function runExtend(args: {
@@ -203,6 +208,10 @@ async function main(): Promise<void> {
   let tools: string[];
   if (args.tools) {
     tools = args.tools;
+  } else if (args.yes) {
+    const detected = detectInstalledPlatforms(args.root);
+    tools = detected.length > 0 ? detected : [DEFAULT_PLATFORM];
+    console.log(chalk.dim(`Auto-selected: ${tools.join(", ")}`));
   } else if (process.stdin.isTTY && !args.dryRun) {
     await showWelcome();
     tools = await selectPlatforms(args.root);

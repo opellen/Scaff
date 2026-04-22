@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import type { PlatformAdapter } from "./types.js";
 import { claude } from "./claude.js";
 import { cursor } from "./cursor.js";
@@ -63,4 +65,14 @@ export function getAdapters(ids: string[]): PlatformAdapter[] {
 
 export function getAllAdapters(): PlatformAdapter[] {
   return [...ALL_ADAPTERS];
+}
+
+export function detectInstalledPlatforms(projectRoot: string): string[] {
+  const detected: string[] = [];
+  for (const adapter of ALL_ADAPTERS) {
+    if (existsSync(resolve(projectRoot, adapter.configDir))) {
+      detected.push(adapter.id);
+    }
+  }
+  return detected;
 }

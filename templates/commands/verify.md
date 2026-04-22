@@ -12,7 +12,7 @@ Cross-checks the current implementation state against GOAL.md and DESIGN.md to s
 ## Constraints
 
 <!-- @if subagent -->
-- **Delegate** analysis and verification tasks to **subagents** — direct work is limited to one-line fixes.
+- **Delegate** evidence gathering (reading files, running checks) to **subagents** — verification synthesis stays with main. Direct work is limited to one-line fixes.
 - Report subagent results to the user.
 <!-- @else -->
 - Perform analysis and verification tasks directly.

@@ -8,7 +8,7 @@ tags: [workflow, scaff, scout]
 ## Constraints
 
 <!-- @if subagent -->
-- **Delegate** analysis and implementation tasks to **subagents** — direct work is limited to one-line fixes.
+- **Delegate** exploration tasks (file discovery, keyword search, tracing) to **subagents** — analysis and judgment stay with main. Direct implementation work is limited to one-line fixes.
 - Report subagent results to the user.
 <!-- @else -->
 - Perform analysis and implementation tasks directly.
