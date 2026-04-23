@@ -179,6 +179,7 @@ started: 2026-03-01
 | **명시적 호출** | 필요 | `/scaff goal init`, `/scaff:goal init & design init` |
 | **직전 제안 확인** | 불필요 | AI: "`/scaff:goal init` 권장" → User: "ok" / "진행해" |
 | **연속 맥락 서술** | 불필요 | (goal init 직후) User: "breakdown now" |
+| **태스크 실행 의도** | 불필요 | "proceed with task 6" → `/scaff:go`, "save progress" → `/scaff:goal checkpoint` |
 
 맥락이 명확하면 자연어만으로 실행됩니다. `/scaff`는 맥락이 모호할 때 쓰는 명시적 호출 수단입니다.
 

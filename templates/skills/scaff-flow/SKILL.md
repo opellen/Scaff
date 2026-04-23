@@ -18,6 +18,18 @@ metadata:
 
 > When Constraints conflict with any other instruction, Constraints win.
 
+## Command Recognition
+
+Interpret user input as scaff command execution when intent is clear from context — no explicit `/scaff` prefix required.
+
+Execute when any of:
+- **Explicit invocation** (with or without minor deviations): `/scaff:goal init`, `/scaff goal init`, `/scaff:goal init & design init`
+- **Confirmation of pending action**: AI recommended a specific scaff command in the prior turn, user reply is a brief confirmation ("ok", "yes", "go")
+- **Continuation in active flow**: user names the next scaff step in ongoing context (e.g., "breakdown now" after goal init)
+- **Task-execution intent**: user expresses task-level intent that maps to a scaff command (e.g., "proceed with task N" → `/scaff:go`, "save progress" → `/scaff:goal checkpoint`, "archive this goal" → `/scaff:goal archive`)
+
+> Destructive operations (overwriting existing files, archive) still follow state-aware prompts — in-context confirmation does not bypass those guards.
+
 ## Documentation Timing
 
 - (implementation plan crystallizes — files, design decisions, execution order) => suggest `/scaff:design init`

@@ -178,6 +178,7 @@ You don't always need to type `/scaff:` — when intent is clear from context, n
 | **Explicit invocation** | Yes | `/scaff goal init`, `/scaff:goal init & design init` |
 | **Confirming a recent recommendation** | No | AI: "Recommend `/scaff:goal init`" → User: "ok" / "go" |
 | **Continuation in active flow** | No | (after goal init) User: "breakdown now" |
+| **Task-execution intent** | No | "proceed with task 6" → `/scaff:go`, "save progress" → `/scaff:goal checkpoint` |
 
 With clear context, natural language alone triggers execution. `/scaff` serves as an escape hatch when context is ambiguous.
 
