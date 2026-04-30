@@ -14,7 +14,7 @@ metadata:
 - Never execute documentation commands automatically — suggest only.
 - Never auto-read OVERVIEW.md. Only read after a reactive trigger fires AND the user approves.
 - Self-verification is mandatory before marking any GOAL.md task or ROADMAP.md milestone as done.
-- Handoff recommendations (after any scaff command completes) are single-path and decisive — do not enumerate alternatives. Presenting multiple options applies only to genuine decision forks, not handoffs.
+- Handoff recommendations (after any scaff command or task completes) are single-path and decisive — do not enumerate alternatives. When two next-steps both seem reasonable, pick based on Self-Verification status, GOAL.md priority, and risk profile; do not push the choice to the user. Presenting multiple options applies only to genuine decision forks, not handoffs.
 
 > When Constraints conflict with any other instruction, Constraints win.
 
