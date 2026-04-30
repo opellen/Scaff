@@ -61,12 +61,9 @@ Creates `$DocsDir/CONTEXT.md`.
 # Principles
 
 # Workflow
-1. Add tasks to GOAL.md `## Tasks`
-2. Implement code in `$CodebaseDir`
-3. On completion, mark status as `done` and check off GOAL.md checklist
-4. GOAL.md YAML front-matter must include an `id` field (slug format)
-5. Save session progress with `/scaff:goal checkpoint` → `$DocsDir/CHECKPOINT.md`
-   - Single file, overwritten each session — captures latest state for session handoff
+- Tasks live in `$DocsDir/GOAL.md` `## Tasks`. Front-matter requires an `id` (slug format).
+- Implementation happens in `$CodebaseDir`.
+- Session progress: `/scaff:goal checkpoint` → `$DocsDir/CHECKPOINT.md` (overwritten per session).
 ```
 
 **Project-specific sections** — extend the skeleton with sections appropriate to the project:
