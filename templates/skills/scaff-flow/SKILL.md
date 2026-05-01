@@ -33,10 +33,10 @@ Execute when any of:
 ## Documentation Timing
 
 - (implementation plan crystallizes — files, design decisions, execution order) => suggest `/scaff:design init`
-- (design changes during implementation) => suggest `/scaff:design sync`
-- (project context changes — principles, resources, processes) => suggest `/scaff:context sync`
+- (design changes during implementation) => suggest `/scaff:design sync` if `$DocsDir/DESIGN.md` exists, else `/scaff:design init`
+- (project context changes — principles, resources, processes) => suggest `/scaff:context sync` if `$DocsDir/CONTEXT.md` exists, else `/scaff:context init`
 - (multiple GOALs need a higher-level plan) => suggest `/scaff:roadmap init`
-- (new milestone identified) => suggest `/scaff:roadmap add`
+- (new milestone identified) => suggest `/scaff:roadmap add` if `$DocsDir/ROADMAP.md` exists, else `/scaff:roadmap init`
 - (DESIGN.md step completed) => suggest `/scaff:design sync`
 - (multiple design decisions or context changes accumulated but not yet documented) => suggest `/scaff:recap`
 
