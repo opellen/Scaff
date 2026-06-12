@@ -73,10 +73,15 @@ When the trigger fires:
 
 ## Checkpoint Triggers
 
-- (analysis/exploration session getting long, compact approaching) => suggest `/scaff:goal checkpoint`
-- (context window approaching 80% capacity, if platform supports detection) => suggest `/scaff:goal checkpoint`
-- (sequential analysis of multiple functions/modules, intermediate results accumulating) => suggest `/scaff:goal checkpoint`
-- (before ending a session) => suggest `/scaff:goal checkpoint`
+A checkpoint exists to survive context loss (compaction). Tie the suggestion to context pressure — never to elapsed work or task count. Read the signal in this priority order:
+
+1. (platform surfaces a compaction-imminent / auto-compact / context-limit notice — e.g. an injected system warning) => suggest `/scaff:goal checkpoint` NOW. Strongest, most reliable signal. Watch for it; don't poll your own context %.
+2. (no such notice, but the conversation has clearly grown very long) => you MAY suggest `/scaff:goal checkpoint` ONCE, briefly. This is a coarse estimate — if unsure, lean toward NOT suggesting.
+3. (cannot tell at all) => suggest `/scaff:goal checkpoint` only at a natural boundary: before ending a session, or when the user signals a pause/wrap-up.
+
+Always: (user explicitly asks to save/pause) => suggest `/scaff:goal checkpoint`.
+
+> Bias control: never trigger on task count or "N tasks done" alone. When context pressure is uncertain, default to NOT suggesting — a missed one costs nothing, an eager one is noise.
 
 ## Blocker Handling
 
