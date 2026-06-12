@@ -1,6 +1,6 @@
 {
   "name": "@opellen/scaff",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Agile, goal-centric AI harness. Just markdown.",
   "type": "module",
   "license": "MIT",
@@ -46,6 +46,7 @@
     "@inquirer/core": "^11.1.7",
     "@inquirer/prompts": "^8.3.2",
     "chalk": "^5.6.2",
+    "scaff": "^0.0.4",
     "yaml": "^2.8.3"
   }
 }
