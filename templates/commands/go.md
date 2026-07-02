@@ -31,7 +31,7 @@ tags: [workflow, scaff, go]
    - (PLAN.md absent, task complexity ≥ multi-file) => generate PLAN.md, then report: `"Created [PLAN.md]($DocsDir/PLAN.md)."`
    - (PLAN.md absent, task complexity < multi-file) => proceed without PLAN.md
 5. Execute tasks using the Task Outcome loop below.
-6. Suggest `/scaff:goal checkpoint` only per the checkpoint triggers in the `scaff-flow` skill (context pressure or a natural boundary) — never on task count alone.
+6. Suggest `/scaff:goal checkpoint` only per the checkpoint triggers in the `scaff-flow` skill (platform context-pressure signal, or user pause/session end) — never on task count or goal completion.
 
 ## Task Outcome
 

@@ -73,15 +73,14 @@ When the trigger fires:
 
 ## Checkpoint Triggers
 
-A checkpoint exists to survive context loss (compaction). Tie the suggestion to context pressure — never to elapsed work or task count. Read the signal in this priority order:
+A checkpoint exists to survive context loss (compaction) *mid-goal*. Only two things justify suggesting one:
 
-1. (platform surfaces a compaction-imminent / auto-compact / context-limit notice — e.g. an injected system warning) => suggest `/scaff:goal checkpoint` NOW. Strongest, most reliable signal. Watch for it; don't poll your own context %.
-2. (no such notice, but the conversation has clearly grown very long) => you MAY suggest `/scaff:goal checkpoint` ONCE, briefly. This is a coarse estimate — if unsure, lean toward NOT suggesting.
-3. (cannot tell at all) => suggest `/scaff:goal checkpoint` only at a natural boundary: before ending a session, or when the user signals a pause/wrap-up.
+1. (platform surfaces a compaction-imminent / auto-compact / context-limit notice, or exposes actual context-usage figures nearing the limit — e.g. an injected system warning) => suggest `/scaff:goal checkpoint` NOW. This is the only reliable context-pressure signal. Never estimate your own context % or infer pressure from how long the session "feels" — that estimate tracks turn count, not tokens, and misfires early.
+2. (user explicitly asks to save/pause, or is ending the session) => suggest `/scaff:goal checkpoint`.
 
-Always: (user explicitly asks to save/pause) => suggest `/scaff:goal checkpoint`.
+On platforms that inject no warning, rule 2 is the only trigger — this is intentional: GOAL.md checkboxes and docs/logs already persist state as work completes, so a missed checkpoint is cheap.
 
-> Bias control: never trigger on task count or "N tasks done" alone. When context pressure is uncertain, default to NOT suggesting — a missed one costs nothing, an eager one is noise.
+> Do NOT suggest a checkpoint on task count, milestone/goal completion, or a sense that the session has "grown long." At goal completion the right move is `/scaff:goal archive`, not a checkpoint. When in doubt, stay silent.
 
 ## Blocker Handling
 
