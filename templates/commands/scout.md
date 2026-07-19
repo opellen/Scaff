@@ -30,7 +30,8 @@ tags: [workflow, scaff, scout]
    - `$DocsDir/CONTEXT.md`, `$DocsDir/GOAL.md`, `$DocsDir/DESIGN.md`, `$DocsDir/PLAN.md`, `$DocsDir/ROADMAP.md`, `$DocsDir/CHECKPOINT.md`
    - A file read error means the file does not exist — mark it as "not present" and move on. **Do NOT retry failed reads.**
 2. If no GOAL.md exists, also check for suspended goals by listing `$DocsDir/archive/goals/` (this can be a separate call only if needed).
-3. Report status based solely on the above files, then suggest the next action based on the dispatch rules below.
+3. If no GOAL.md exists, also read `$DocsDir/BACKLOG.md` (skip this read when a GOAL is active).
+4. Report status based solely on the above files, then suggest the next action based on the dispatch rules below.
 
 ## State Dispatch
 
@@ -39,6 +40,7 @@ tags: [workflow, scaff, scout]
 - (CONTEXT.md only, no GOAL, no ROADMAP) => suggest `/scaff:goal init` or `/scaff:roadmap init`
 - (CONTEXT.md + ROADMAP.md, no GOAL) => suggest picking a milestone from ROADMAP.md and starting with `/scaff:goal init`
 - (no GOAL.md, suspended goals exist) => list suspended goals, suggest `/scaff:goal resume`
+- (no GOAL.md, BACKLOG.md has open items) => list items as next-goal candidates, suggest `/scaff:goal init`
 - (GOAL.md + CHECKPOINT.md) => show checkpoint summary, suggest `/scaff:go`
 - (GOAL.md, no DESIGN.md, implementation task) => suggest `/scaff:design init`
 - (GOAL.md, no DESIGN.md, analysis task) => suggest `/scaff:go`

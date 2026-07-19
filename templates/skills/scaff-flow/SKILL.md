@@ -92,6 +92,16 @@ When the current goal cannot proceed (discovered bug, missing dependency, blocki
 
 This preserves "one active GOAL.md at a time" — simpler than in-place stacking schemes.
 
+## Backlog Handling
+
+When a discovery falls outside the current goal's scope but does not block it (unrelated bug, improvement idea, tech debt):
+
+- (out-of-scope discovery, current GOAL can still progress) => offer to append a one-line entry to `$DocsDir/BACKLOG.md`, then continue the current task
+- (diagnosis is substantial) => record it in `$DocsDir/logs/` or `discussion/`; the backlog entry keeps only the one-liner + a pointer
+- Entry format: `- [ ] YYYY-MM-DD <one-liner> (found during <goal-id>)`
+
+Blocking discoveries => Blocker Handling (suspend); non-blocking => backlog.
+
 ## Self-Verification
 
 Before checking off a GOAL.md task or ROADMAP.md milestone as "done", verify:

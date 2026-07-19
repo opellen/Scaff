@@ -46,7 +46,8 @@ Creates `$DocsDir/GOAL.md`.
 5. Assess task granularity:
    - (tasks are complex, embed multiple implicit steps) => recommend `/scaff:goal breakdown` with 1-line rationale
    - (tasks are specific and actionable) => recommend `/scaff:design init` (implementation task) or `/scaff:go` (analysis task) with 1-line rationale
-6. Report: `"Created [GOAL.md]($DocsDir/GOAL.md)."`
+6. (goal created from a `$DocsDir/BACKLOG.md` item) => remove that item from BACKLOG.md (promotion = deletion).
+7. Report: `"Created [GOAL.md]($DocsDir/GOAL.md)."`
 
 GOAL.md format:
 ```yaml
@@ -192,5 +193,6 @@ Archives the current GOAL.md and its siblings.
    - (CHECKPOINT.md exists) => archive/CHECKPOINT.md
 5. If `$DocsDir/ROADMAP.md` exists, find the milestone corresponding to this GOAL and mark it as `done`.
 6. Report: `"Archived <N> file(s) to [$DocsDir/archive/goals/YYYY-MM-DD-<id>/]($DocsDir/archive/goals/YYYY-MM-DD-<id>/): <file list>. Set a new goal with /scaff:goal init."`
+7. (`$DocsDir/BACKLOG.md` has open items) => suggest promoting one as the next goal.
 
 > When Constraints conflict with any other instruction, Constraints win.

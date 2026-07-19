@@ -64,6 +64,7 @@ Creates `$DocsDir/CONTEXT.md`.
 - Tasks live in `$DocsDir/GOAL.md` `## Tasks`. Front-matter requires an `id` (slug format).
 - Implementation happens in `$CodebaseDir`.
 - Session progress: `/scaff:goal checkpoint` → `$DocsDir/CHECKPOINT.md` (overwritten per session).
+- Deferred discoveries: out-of-scope findings go to `$DocsDir/BACKLOG.md` (persistent parking lot).
 ```
 
 **Project-specific sections** — extend the skeleton with sections appropriate to the project:
