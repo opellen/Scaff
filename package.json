@@ -1,6 +1,6 @@
 {
   "name": "@opellen/scaff",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Agile, goal-centric AI harness. Just markdown.",
   "type": "module",
   "license": "MIT",
