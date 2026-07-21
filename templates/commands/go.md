@@ -12,6 +12,7 @@ tags: [workflow, scaff, go]
 <!-- @if subagent -->
 - **Delegate** implementation tasks to **subagents** — direct work is limited to one-line fixes.
 - Report subagent results to the user after each task completes.
+- (first subagent dispatch of the session, or first dispatch after a compaction) => load the `scaff-subagent` skill BEFORE dispatching and say so in one line (e.g. "scaff-subagent loaded — dispatching <task> → <model> (<rationale>)"). A dispatch without this load+announcement is a violation: the skill's dispatch rules (model selection/reporting, prompt requirements, post-verify) only bind once its content is actually in context.
 <!-- @else -->
 - Perform implementation tasks directly.
 - Report results to the user after each task completes.

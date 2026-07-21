@@ -10,6 +10,7 @@ tags: [workflow, scaff, scout]
 <!-- @if subagent -->
 - **Delegate** exploration tasks (e.g., file discovery, keyword search, tracing) to **subagents** — analysis and judgment stay with main. Direct implementation work is limited to one-line fixes.
 - Report subagent results to the user.
+- (first subagent dispatch of the session, or first dispatch after a compaction) => load the `scaff-subagent` skill BEFORE dispatching and say so in one line (e.g. "scaff-subagent loaded — dispatching <task> → <model> (<rationale>)"). A dispatch without this load+announcement is a violation: the skill's dispatch rules (model selection/reporting, prompt requirements, post-verify) only bind once its content is actually in context.
 <!-- @else -->
 - Perform analysis and implementation tasks directly.
 - Report results to the user.
@@ -29,7 +30,7 @@ tags: [workflow, scaff, scout]
 1. Read all of these files at once (parallel if supported, sequential otherwise):
    - `$DocsDir/CONTEXT.md`, `$DocsDir/GOAL.md`, `$DocsDir/DESIGN.md`, `$DocsDir/PLAN.md`, `$DocsDir/ROADMAP.md`, `$DocsDir/CHECKPOINT.md`
    - A file read error means the file does not exist — mark it as "not present" and move on. **Do NOT retry failed reads.**
-2. If no GOAL.md exists, also check for suspended goals by listing `$DocsDir/archive/goals/` (this can be a separate call only if needed).
+2. If no GOAL.md exists, also check for suspended goals by listing `$DocsDir/suspended/` (this can be a separate call only if needed).
 3. If no GOAL.md exists, also read `$DocsDir/BACKLOG.md` (skip this read when a GOAL is active).
 4. Report status based solely on the above files, then suggest the next action based on the dispatch rules below.
 
