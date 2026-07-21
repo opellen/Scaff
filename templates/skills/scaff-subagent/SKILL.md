@@ -88,6 +88,11 @@ Ask-first: If anything is unclear, ask before starting.
 - (architecture, design, review) => capable model (e.g. opus)
 - (otherwise) => standard model
 
+When dispatching, tell the user which model was requested and why, in one phrase — e.g. "execute subagent → haiku (single-file mechanical edit)". Report the *requested* model only — platforms may override silently.
+
+- (no model specified) => say "inherited (session default)", never guess
+- (platform exposes no model choice) => skip selection, note "platform default"
+
 ## Workflow: Scout → Split → Execute
 
 ### Phase 1 — Scout

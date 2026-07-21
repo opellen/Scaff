@@ -11,6 +11,7 @@ Manages `$DocsDir/DESIGN.md`. Records the **implementation design** for the curr
 
 > If GOAL.md is "what/why", DESIGN.md is "how".
 > Documents implementation plans, file change lists, key design decisions — implementation details that would be lost if only in chat.
+> DESIGN.md is an *implementation* design doc — architecture decisions, module boundaries, file map. It is never a visual/UI design document; UI-related goals still get an implementation design here.
 
 ## Lifecycle
 
