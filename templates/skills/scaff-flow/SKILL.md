@@ -80,10 +80,10 @@ When the trigger fires:
 
 A checkpoint exists to survive context loss (compaction) *mid-goal*. Only two things justify suggesting one:
 
-1. (platform surfaces a compaction-imminent / auto-compact / context-limit notice, or exposes actual context-usage figures nearing the limit — e.g. an injected system warning) => suggest `/scaff:goal checkpoint` NOW. This is the only reliable context-pressure signal. Never estimate your own context % or infer pressure from how long the session "feels" — that estimate tracks turn count, not tokens, and misfires early.
-2. (user explicitly asks to save/pause, or is ending the session) => suggest `/scaff:goal checkpoint`.
+- (platform surfaces a compaction-imminent / auto-compact / context-limit notice, or exposes actual context-usage figures nearing the limit — e.g. an injected system warning) => suggest `/scaff:goal checkpoint` NOW. This is the only reliable context-pressure signal. Never estimate your own context % or infer pressure from how long the session "feels" — that estimate tracks turn count, not tokens, and misfires early.
+- (user explicitly asks to save/pause, or is ending the session) => suggest `/scaff:goal checkpoint`.
 
-On platforms that inject no warning, rule 2 is the only trigger — this is intentional: GOAL.md checkboxes and docs/logs already persist state as work completes, so a missed checkpoint is cheap.
+On platforms that inject no warning, the second trigger is the only one — this is intentional: GOAL.md checkboxes and docs/logs already persist state as work completes, so a missed checkpoint is cheap.
 
 > Do NOT suggest a checkpoint on task count, milestone/goal completion, or a sense that the session has "grown long." At goal completion the right move is `/scaff:goal archive`, not a checkpoint. When in doubt, stay silent.
 
@@ -91,7 +91,7 @@ On platforms that inject no warning, rule 2 is the only trigger — this is inte
 
 When the current goal cannot proceed (discovered bug, missing dependency, blocking issue):
 
-- (blocker identified, current GOAL cannot progress) => suggest `/scaff:goal suspend` followed by `/scaff:goal "<blocker description>"` to address the blocker as its own goal
+- (blocker identified, current GOAL cannot progress) => suggest `/scaff:goal suspend` followed by `/scaff:goal init "<blocker description>"` to address the blocker as its own goal
 - (blocker goal archived, suspended goals remain) => suggest `/scaff:goal resume` to continue a suspended goal
 - (nested blockers) => same pattern recursively; `suspended/<goal-id>/` stacks naturally, `resume` presents a list when multiple
 
@@ -105,7 +105,7 @@ When a discovery falls outside the current goal's scope but does not block it (u
 - (diagnosis is substantial) => record it in `$DocsDir/logs/` or `discussion/`; the backlog entry keeps only the one-liner + a pointer
 - Entry format: `- [ ] YYYY-MM-DD <one-liner> (found during <goal-id>)`
 
-Blocking discoveries => Blocker Handling (suspend); non-blocking => backlog.
+Blocking discoveries belong to Blocker Handling (suspend); non-blocking ones belong here.
 
 ## Self-Verification
 
@@ -121,11 +121,13 @@ Before checking off a GOAL.md task or ROADMAP.md milestone as "done", verify:
 
 ## Execution Handoff
 
-- (goal breakdown completed) => suggest `/scaff:go`
+- (goal breakdown completed, sub-tasks are analysis-focused) => suggest `/scaff:go`
+- (goal breakdown completed, sub-tasks include implementation and no DESIGN.md exists) => suggest `/scaff:design init`
 - (design init completed) => suggest `/scaff:go`
 - (goal resumed from suspension) => suggest `/scaff:go`
 - (goal checkpoint saved, tasks remain) => suggest `/scaff:go`
-- (session start, active GOAL.md with uncompleted tasks) => suggest `/scaff:go`
+- (session start, active GOAL.md with uncompleted tasks, DESIGN.md exists or the task is analysis) => suggest `/scaff:go`
+- (session start, active GOAL.md with uncompleted tasks, implementation task and no DESIGN.md) => suggest `/scaff:design init`
 
 ## User Decision Support
 

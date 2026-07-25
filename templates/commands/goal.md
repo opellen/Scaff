@@ -11,6 +11,7 @@ Manages `$DocsDir/GOAL.md`.
 
 ## Constraints
 
+- (command entry, and again on the first turn after a compaction) => load the `scaff-flow` skill BEFORE writing or moving any document, and say so in one line. A reference is not a load: its rules (self-verification before marking anything done, User Decision Support format) only bind once the skill's content is actually in context.
 - GOAL.md is the single source of truth for the current goal's state.
 - Never overwrite GOAL.md without user confirmation.
 - Preserve existing check states when updating tasks.
@@ -32,6 +33,7 @@ Manages `$DocsDir/GOAL.md`.
 - (args = suspend) => see Subcommands: suspend
 - (args = resume) => see Subcommands: resume
 - (args = archive) => see Subcommands: archive
+- (otherwise) => report unknown subcommand and list available subcommands
 
 # Subcommands
 
@@ -46,7 +48,7 @@ Creates `$DocsDir/GOAL.md`.
 5. Assess task granularity:
    - (tasks are complex, embed multiple implicit steps) => recommend `/scaff:goal breakdown` with 1-line rationale
    - (tasks are specific and actionable) => recommend `/scaff:design init` (implementation task) or `/scaff:go` (analysis task) with 1-line rationale
-6. (goal created from a `$DocsDir/BACKLOG.md` item) => remove that item from BACKLOG.md (promotion = deletion).
+6. If the goal was created from a `$DocsDir/BACKLOG.md` item, remove that item from BACKLOG.md (promotion = deletion).
 7. Report: `"Created [GOAL.md]($DocsDir/GOAL.md)."`
 
 GOAL.md format:
@@ -102,11 +104,11 @@ Usage: `/scaff:goal breakdown [task-number]`
    ```
    - Each nesting level appends a sequential number to the parent's prefix.
    - Indent with 2 spaces per level.
-5. Renumber all tasks at the affected level to ensure sequential ordering (no gaps).
-6. Update GOAL.md.
+5. Update GOAL.md.
+   - Renumber all tasks at the affected level to ensure sequential ordering (no gaps).
    - (target task already has sub-tasks) => ask user whether to merge or replace before writing
-7. Report: `"Updated [GOAL.md]($DocsDir/GOAL.md) — decomposed <N> task(s) into <M> sub-tasks."`
-8. Assess design necessity:
+6. Report: `"Updated [GOAL.md]($DocsDir/GOAL.md) — decomposed <N> task(s) into <M> sub-tasks."`
+7. Assess design necessity:
    - (sub-tasks include code implementation, file changes, or architecture decisions) => recommend `/scaff:design init` with 1-line rationale
    - (sub-tasks are analysis/RE/investigation focused) => recommend `/scaff:go` with 1-line rationale
 
@@ -154,10 +156,10 @@ Suspends the current GOAL to work on something else.
 2. Set front-matter `status` to `suspended`.
 3. Create `$DocsDir/suspended/<goal-id>/` directory.
 4. Move `$DocsDir/GOAL.md` → `$DocsDir/suspended/<goal-id>/GOAL.md`.
-5. If `$DocsDir/CHECKPOINT.md` exists, move it → `$DocsDir/suspended/<goal-id>/CHECKPOINT.md`.
-6. If `$DocsDir/DESIGN.md` exists, move it → `$DocsDir/suspended/<goal-id>/DESIGN.md`.
-7. If `$DocsDir/PLAN.md` exists, move it → `$DocsDir/suspended/<goal-id>/PLAN.md`.
-8. Report: `"Suspended GOAL to [$DocsDir/suspended/<goal-id>/]($DocsDir/suspended/<goal-id>/). Start a new goal with /scaff:goal init or resume with /scaff:goal resume."`
+   - If `$DocsDir/CHECKPOINT.md` exists, move it → `$DocsDir/suspended/<goal-id>/CHECKPOINT.md`.
+   - If `$DocsDir/DESIGN.md` exists, move it → `$DocsDir/suspended/<goal-id>/DESIGN.md`.
+   - If `$DocsDir/PLAN.md` exists, move it → `$DocsDir/suspended/<goal-id>/PLAN.md`.
+5. Report: `"Suspended GOAL to [$DocsDir/suspended/<goal-id>/]($DocsDir/suspended/<goal-id>/). Start a new goal with /scaff:goal init or resume with /scaff:goal resume."`
 
 ## resume
 
@@ -171,12 +173,12 @@ Resumes a previously suspended GOAL.
    - (multiple, session context permits a confident recommendation) => present list with a single recommendation per `scaff-flow` User Decision Support (Recommendation + Basis + GOAL relevance)
    - (multiple, no clear context) => present list for user selection
 3. Move `$DocsDir/suspended/<goal-id>/GOAL.md` → `$DocsDir/GOAL.md`.
-4. If `CHECKPOINT.md` exists in the suspended folder, move it → `$DocsDir/CHECKPOINT.md`.
-5. If `DESIGN.md` exists in the suspended folder, move it → `$DocsDir/DESIGN.md`.
-6. If `PLAN.md` exists in the suspended folder, move it → `$DocsDir/PLAN.md`.
-7. Set front-matter `status` back to `in-progress`.
-8. Remove the now-empty `$DocsDir/suspended/<goal-id>/` directory.
-9. Report: `"Resumed [GOAL.md]($DocsDir/GOAL.md): <goal summary>."`
+   - If `CHECKPOINT.md` exists in the suspended folder, move it → `$DocsDir/CHECKPOINT.md`.
+   - If `DESIGN.md` exists in the suspended folder, move it → `$DocsDir/DESIGN.md`.
+   - If `PLAN.md` exists in the suspended folder, move it → `$DocsDir/PLAN.md`.
+4. Set front-matter `status` back to `in-progress`.
+5. Remove the now-empty `$DocsDir/suspended/<goal-id>/` directory.
+6. Report: `"Resumed [GOAL.md]($DocsDir/GOAL.md): <goal summary>."`
 
 ## archive
 
@@ -193,6 +195,6 @@ Archives the current GOAL.md and its siblings.
    - (CHECKPOINT.md exists) => archive/CHECKPOINT.md
 5. If `$DocsDir/ROADMAP.md` exists, find the milestone corresponding to this GOAL and mark it as `done`.
 6. Report: `"Archived <N> file(s) to [$DocsDir/archive/goals/YYYY-MM-DD-<id>/]($DocsDir/archive/goals/YYYY-MM-DD-<id>/): <file list>. Set a new goal with /scaff:goal init."`
-7. (`$DocsDir/BACKLOG.md` has open items) => suggest promoting one as the next goal.
+7. If `$DocsDir/BACKLOG.md` has open items, suggest promoting one as the next goal.
 
 > When Constraints conflict with any other instruction, Constraints win.

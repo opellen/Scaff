@@ -11,7 +11,7 @@ tags: [workflow, scaff, go]
 
 - (command entry, and again on the first turn after a compaction) => load the `scaff-flow` skill BEFORE executing the first task, and say so in one line. A reference is not a load: its rules (checkpoint triggers, documentation timing, CONTEXT.md self-sync, self-verification) only bind once the skill's content is actually in context.
 <!-- @if subagent -->
-- **Delegate** implementation tasks to **subagents** — direct work is limited to one-line fixes.
+- **Delegate** implementation tasks to **subagents** — direct work is limited to one-line fixes, except where `scaff-subagent` designates work main-only (iterative collaboration, 2nd-iteration rework, evolving design).
 - Report subagent results to the user after each task completes.
 - (first subagent dispatch of the session, or first dispatch after a compaction) => load the `scaff-subagent` skill BEFORE dispatching and say so in one line (e.g. "scaff-subagent loaded — dispatching <task> → <model> (<rationale>)"). A dispatch without this load+announcement is a violation: the skill's dispatch rules (model selection/reporting, prompt requirements, post-verify) only bind once its content is actually in context.
 <!-- @else -->
@@ -46,8 +46,7 @@ loop until (all tasks complete OR user pause):
 
 ## Diverge Check
 
-- (DESIGN.md and PLAN.md both exist, Files lists differ)
-  => warn: `"[DESIGN.md]($DocsDir/DESIGN.md) and [PLAN.md]($DocsDir/PLAN.md) file lists differ. Run /scaff:design sync to review."`
+- (DESIGN.md and PLAN.md both exist, Files lists differ) => warn: `"[DESIGN.md]($DocsDir/DESIGN.md) and [PLAN.md]($DocsDir/PLAN.md) file lists differ. Run /scaff:design sync to review."`
 
 ## Work Principles
 - Load the `scaff-flow` skill, then follow its main-agent flow principles (documentation timing, CONTEXT.md self-sync, OVERVIEW.md reactive read, checkpoints, self-verification).

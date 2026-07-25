@@ -12,15 +12,16 @@ Cross-checks the current implementation state against GOAL.md and DESIGN.md to s
 ## Constraints
 
 <!-- @if subagent -->
-- **Delegate** evidence gathering (e.g., reading files, running checks) to **subagents** — verification synthesis stays with main. Direct work is limited to one-line fixes.
+- **Delegate** evidence gathering (e.g., reading files, running checks) to **subagents** — verification synthesis stays with main. Direct work is limited to one-line fixes, except where `scaff-subagent` designates work main-only (iterative collaboration, 2nd-iteration rework, evolving design).
 - Report subagent results to the user.
+- (first subagent dispatch of the session, or first dispatch after a compaction) => load the `scaff-subagent` skill BEFORE dispatching and say so in one line (e.g. "scaff-subagent loaded — dispatching <task> → <model> (<rationale>)"). A dispatch without this load+announcement is a violation: the skill's dispatch rules (model selection/reporting, prompt requirements, post-verify) only bind once its content is actually in context.
 <!-- @else -->
 - Perform analysis and verification tasks directly.
 - Report results to the user.
 <!-- @endif -->
 - Design Alignment focuses on structural decisions, not style preferences — ignore cosmetic differences.
 - Task Coverage is mechanical — checkbox state vs code presence, low ambiguity.
-- Assign severity based on the strongest evidence available — no concrete signal means don't flag.
+- Assign severity based on the strongest evidence available — for a claim about the code, no concrete signal means don't flag. (Absence of implementation for an unchecked task is itself a concrete signal.)
 - Omit issues without a `file:line` pointer and a concrete action.
 
 > When Constraints conflict with any other instruction, Constraints win.
@@ -43,6 +44,7 @@ Read `$DocsDir/GOAL.md` and `$DocsDir/DESIGN.md` at once (parallel if supported,
 
 - (GOAL + DESIGN) => run full verification (Phases 2–4)
 - (GOAL only) => skip Phase 2, run Phases 3–4
+- (DESIGN only) => skip Phases 3–4, run Phase 2
 - (neither, $ARGUMENTS given) => freeform check against `$ARGUMENTS`
 - (neither, no $ARGUMENTS) => ask the user what to verify
 
@@ -105,7 +107,15 @@ If `$ARGUMENTS` narrows the scope, focus on that area first.
 ### Archive Readiness
 
 - (highest = BLOCKED or CONFLICT) => do not archive — resolve first
-- (highest = DRIFT or REVIEW) => archive at your discretion
+- (highest = DRIFT) => archive at your discretion
+- (highest = REVIEW) => surface the REVIEW items and let the user decide before archiving — REVIEW means user judgment is required
+- (highest = STYLE) => archive — cosmetic findings do not block
 - (no issues) => clear to archive
+
+## Work Principles
+
+<!-- @if subagent -->
+- Load the `scaff-subagent` skill, then follow its delegation principles and workflow.
+<!-- @endif -->
 
 > When Constraints conflict with any other instruction, Constraints win.

@@ -5,11 +5,13 @@ category: Workflow
 tags: [workflow, scaff, scout]
 ---
 
+# scaff:scout
+
 ## Constraints
 
 - (command entry, and again on the first turn after a compaction) => load the `scaff-flow` skill BEFORE reporting status, and say so in one line. A reference is not a load: its rules (checkpoint triggers, documentation timing, CONTEXT.md self-sync, self-verification) only bind once the skill's content is actually in context.
 <!-- @if subagent -->
-- **Delegate** exploration tasks (e.g., file discovery, keyword search, tracing) to **subagents** — analysis and judgment stay with main. Direct implementation work is limited to one-line fixes.
+- **Delegate** exploration tasks (e.g., file discovery, keyword search, tracing) to **subagents** — analysis and judgment stay with main. Direct implementation work is limited to one-line fixes, except where `scaff-subagent` designates work main-only (iterative collaboration, 2nd-iteration rework, evolving design).
 - Report subagent results to the user.
 - (first subagent dispatch of the session, or first dispatch after a compaction) => load the `scaff-subagent` skill BEFORE dispatching and say so in one line (e.g. "scaff-subagent loaded — dispatching <task> → <model> (<rationale>)"). A dispatch without this load+announcement is a violation: the skill's dispatch rules (model selection/reporting, prompt requirements, post-verify) only bind once its content is actually in context.
 <!-- @else -->
@@ -49,7 +51,7 @@ tags: [workflow, scaff, scout]
 - (GOAL.md + DESIGN.md) => suggest `/scaff:go`
 - (GOAL.md completed) => suggest `/scaff:goal archive`
 
-**Implementation vs Analysis criteria**: If GOAL.md sub-tasks contain keywords like "analyze", "investigate", "audit", "research", "document", or the deliverable is an `.md` analysis doc, it's an analysis task. If the goal is coding, porting, or implementation, it's an implementation task.
+**Implementation vs Analysis criteria**: If GOAL.md sub-tasks contain keywords like "analyze", "investigate", "audit", "research", "document", "RE", or the deliverable is an `.md` analysis doc, it's an analysis task. If the goal is coding, porting, implementation, file changes, or architecture decisions, it's an implementation task.
 
 # Discovery Mode
 

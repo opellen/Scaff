@@ -13,18 +13,18 @@ Manages `$DocsDir/DESIGN.md`. Records the **implementation design** for the curr
 > Documents implementation plans, file change lists, key design decisions — implementation details that would be lost if only in chat.
 > DESIGN.md is an *implementation* design doc — architecture decisions, module boundaries, file map. It is never a visual/UI design document; UI-related goals still get an implementation design here.
 
-## Lifecycle
-
-DESIGN.md is paired 1:1 with GOAL.md:
-- Created after GOAL.md when an implementation plan emerges
-- Archived together with GOAL.md
-
 ## Constraints
 
 - Never overwrite DESIGN.md without user confirmation.
 - DESIGN.md requires a corresponding GOAL.md — do not create without one.
 
 > When Constraints conflict with any other instruction, Constraints win.
+
+## Lifecycle
+
+DESIGN.md is paired 1:1 with GOAL.md:
+- Created after GOAL.md when an implementation plan emerges
+- Archived together with GOAL.md
 
 ## Usage
 
