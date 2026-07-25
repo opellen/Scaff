@@ -28,7 +28,7 @@ Manages `$DocsDir/OVERVIEW.md`. Records the **project-level technical overview**
 ## Subcommand Dispatch
 
 - (no subcommand given, `$DocsDir/OVERVIEW.md` absent) => run init
-- (no subcommand given, `$DocsDir/OVERVIEW.md` exists) => prompt the user to choose
+- (no subcommand given, `$DocsDir/OVERVIEW.md` exists) => run sync
 - (args = init) => see Subcommands: init
 - (args = sync) => see Subcommands: sync
 

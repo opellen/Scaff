@@ -9,6 +9,7 @@ tags: [workflow, scaff, go]
 
 ## Constraints
 
+- (command entry, and again on the first turn after a compaction) => load the `scaff-flow` skill BEFORE executing the first task, and say so in one line. A reference is not a load: its rules (checkpoint triggers, documentation timing, CONTEXT.md self-sync, self-verification) only bind once the skill's content is actually in context.
 <!-- @if subagent -->
 - **Delegate** implementation tasks to **subagents** — direct work is limited to one-line fixes.
 - Report subagent results to the user after each task completes.
@@ -49,9 +50,9 @@ loop until (all tasks complete OR user pause):
   => warn: `"[DESIGN.md]($DocsDir/DESIGN.md) and [PLAN.md]($DocsDir/PLAN.md) file lists differ. Run /scaff:design sync to review."`
 
 ## Work Principles
-- Follow the main-agent flow principles defined in the `scaff-flow` skill (documentation timing, CONTEXT.md self-sync, OVERVIEW.md reactive read, checkpoints, self-verification).
+- Load the `scaff-flow` skill, then follow its main-agent flow principles (documentation timing, CONTEXT.md self-sync, OVERVIEW.md reactive read, checkpoints, self-verification).
 <!-- @if subagent -->
-- Follow the subagent delegation principles and workflow defined in the `scaff-subagent` skill.
+- Load the `scaff-subagent` skill, then follow its delegation principles and workflow.
 <!-- @endif -->
 
 > When Constraints conflict with any other instruction, Constraints win.

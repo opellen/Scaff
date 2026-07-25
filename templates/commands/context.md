@@ -26,7 +26,7 @@ Manages `$DocsDir/CONTEXT.md`. Records the **current working context** of the pr
 ## Subcommand Dispatch
 
 - (no subcommand given, `$DocsDir/CONTEXT.md` absent) => run init
-- (no subcommand given, `$DocsDir/CONTEXT.md` exists) => prompt the user to choose
+- (no subcommand given, `$DocsDir/CONTEXT.md` exists) => run sync
 - (args = init) => see Subcommands: init
 - (args = sync) => see Subcommands: sync
 

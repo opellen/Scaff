@@ -33,7 +33,7 @@ DESIGN.md is paired 1:1 with GOAL.md:
 ## Subcommand Dispatch
 
 - (no subcommand given, `$DocsDir/DESIGN.md` absent) => run init
-- (no subcommand given, `$DocsDir/DESIGN.md` exists) => prompt the user to choose
+- (no subcommand given, `$DocsDir/DESIGN.md` exists) => run sync
 - (args = init) => see Subcommands: init
 - (args = sync) => see Subcommands: sync
 - (args = archive) => see Subcommands: archive

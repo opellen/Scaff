@@ -7,6 +7,7 @@ tags: [workflow, scaff, scout]
 
 ## Constraints
 
+- (command entry, and again on the first turn after a compaction) => load the `scaff-flow` skill BEFORE reporting status, and say so in one line. A reference is not a load: its rules (checkpoint triggers, documentation timing, CONTEXT.md self-sync, self-verification) only bind once the skill's content is actually in context.
 <!-- @if subagent -->
 - **Delegate** exploration tasks (e.g., file discovery, keyword search, tracing) to **subagents** — analysis and judgment stay with main. Direct implementation work is limited to one-line fixes.
 - Report subagent results to the user.
@@ -63,9 +64,9 @@ When the user's intent is unclear or exploratory (`/scaff:scout` with no specifi
   - First objective => suggest `/scaff:goal init`
 
 # Work Principles
-- Follow the main-agent flow principles defined in the `scaff-flow` skill (documentation timing, CONTEXT.md self-sync, OVERVIEW.md reactive read, checkpoints, self-verification).
+- Load the `scaff-flow` skill, then follow its main-agent flow principles (documentation timing, CONTEXT.md self-sync, OVERVIEW.md reactive read, checkpoints, self-verification).
 <!-- @if subagent -->
-- Follow the subagent delegation principles and workflow defined in the `scaff-subagent` skill.
+- Load the `scaff-subagent` skill, then follow its delegation principles and workflow.
 <!-- @endif -->
 
 > When Constraints conflict with any other instruction, Constraints win.

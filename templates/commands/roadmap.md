@@ -44,7 +44,7 @@ Creates `$DocsDir/ROADMAP.md`.
 3. If ROADMAP.md already exists, run pre-replace checks (see Init Guards below).
 4. Write ROADMAP.md using the format template below.
 5. Report: `"Created [ROADMAP.md]($DocsDir/ROADMAP.md)."`
-6. If `$DocsDir/CONTEXT.md` exists, suggest: "Update project context with `/scaff:context sync`?"
+6. If `$DocsDir/CONTEXT.md` exists, suggest declaratively: "Project context needs updating — `/scaff:context sync`."
 
 ### Init Guards
 

@@ -12,6 +12,8 @@ metadata:
 ## Constraints
 
 - Never execute documentation commands automatically — suggest only.
+- At most one documentation suggestion per turn — when several triggers fire, pick the highest-value one and drop the rest.
+- (a suggestion was made and the user did not act on it) => do not repeat it this session unless the user asks or new evidence changes the case. Silence is an answer.
 - Never auto-read OVERVIEW.md. Only read after a reactive trigger fires AND the user approves.
 - Self-verification is mandatory before marking any GOAL.md task or ROADMAP.md milestone as done.
 - Handoff recommendations (after any scaff command or task completes) are single-path and decisive — do not enumerate alternatives. When two next-steps both seem reasonable, pick based on Self-Verification status, GOAL.md priority, and risk profile; do not push the choice to the user. Presenting multiple options applies only to genuine decision forks, not handoffs.
@@ -40,19 +42,22 @@ Execute when any of:
 - (DESIGN.md step completed) => suggest `/scaff:design sync`
 - (multiple design decisions or context changes accumulated but not yet documented) => suggest `/scaff:recap`
 
-Keep suggestions brief: "Implementation plan ready — document with `/scaff:design init`?"
+Keep suggestions brief and declarative — a statement, not a question: "Implementation plan ready — `/scaff:design init` documents it." A suggestion phrased as a question demands a reply; a statement can be passed over without friction.
 
 ## CONTEXT.md Self-Sync
 
-CONTEXT.md is the main agent's working memory — it should grow as the session reveals new project facts. Suggest `/scaff:context sync` proactively when any of these signals fire:
+CONTEXT.md is the main agent's working memory — it should grow as the session reveals new project facts. Accumulate these signals silently; do NOT suggest on each one:
 
-- (new resource discovered — file, directory, external system worth referencing) => suggest sync
-- (workflow step refined — a procedure the AI repeats and should remember) => suggest sync
-- (new project principle articulated by user — e.g. "always do X", "never do Y") => suggest sync
-- (new analysis topic / index entry — for projects that maintain analysis tables) => suggest sync
-- (session about to end AND uncommitted context changes accumulated) => suggest sync as part of wrap-up
+- new resource worth referencing (file, directory, external system)
+- workflow step refined — a procedure the AI repeats and should remember
+- new analysis topic / index entry — for projects that maintain analysis tables
 
-Cap: at most one CONTEXT.md sync suggestion per session unless the user explicitly accepts an earlier one.
+Then:
+
+- (user articulates a new project principle — e.g. "always do X", "never do Y") => suggest `/scaff:context sync` now; an explicit user rule is worth interrupting for
+- (session ending, or several signals accumulated) => suggest `/scaff:context sync` once as part of wrap-up
+
+Cap: at most two `/scaff:context sync` suggestions per session — one for an explicit principle, one at wrap-up.
 
 ## OVERVIEW.md Reactive Read
 

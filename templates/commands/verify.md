@@ -31,7 +31,6 @@ Cross-checks the current implementation state against GOAL.md and DESIGN.md to s
 
 - If `$ARGUMENTS` has content, use it as the focus area for verification.
 - If empty, infer the verification scope from the current session context (recent work, active goal, design).
-- If unable to determine what to verify, prompt the user to specify.
 
 # Workflow
 

@@ -83,14 +83,18 @@ Ask-first: If anything is unclear, ask before starting.
 
 ## Model Selection
 
+Selecting a tier is part of dispatch — inherit is a fallback, not a default.
+
 - (single file, clear spec) => fast model (e.g. haiku)
 - (multi-file, integration/judgment) => standard model (e.g. sonnet)
 - (architecture, design, review) => capable model (e.g. opus)
 - (otherwise) => standard model
 
+Know what "inherit" resolves to before choosing it: if the platform declares the session model (e.g. in the system prompt), factor it in — on a premium-tier session, inheriting is the most expensive possible dispatch, and a lower tier per the table is usually sufficient. Inherit ONLY when: (a) the platform cannot specify a model, (b) the session model is unknown, or (c) the task genuinely needs the session-tier model — and name which case applies in the dispatch report.
+
 When dispatching, tell the user which model was requested and why, in one phrase — e.g. "execute subagent → haiku (single-file mechanical edit)". Report the *requested* model only — platforms may override silently.
 
-- (no model specified) => say "inherited (session default)", never guess
+- (dispatched without specifying despite the rules above) => still report honestly: "inherited (session default)" — never guess what ran
 - (platform exposes no model choice) => skip selection, note "platform default"
 
 ## Workflow: Scout → Split → Execute
