@@ -95,6 +95,8 @@ Know what "inherit" resolves to before choosing it: if the platform declares the
 
 When dispatching, tell the user which model was requested and why, in one phrase — e.g. "execute subagent → haiku (single-file mechanical edit)". Report the *requested* model only — platforms may override silently.
 
+Placement matters as much as content: put the dispatch report in the turn's **final message**, not only as interim text between tool calls — on some platforms interim text is not reliably shown, so a report the user never sees is a violation even though it was written. The same applies to the skill-load announcement.
+
 - (dispatched without specifying despite the rules above) => still report honestly: "inherited (session default)" — never guess what ran
 - (platform exposes no model choice) => skip selection, note "platform default"
 
