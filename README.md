@@ -238,7 +238,7 @@ AI:  Decomposed Task 3 into 4 subtasks (3.1–3.4)
 You: /scaff:go
 AI:  Task 1/7: Project initialization... ✓ done
      Task 2/7: Editor core implementation... ✓ done
-     Several tasks completed. Save progress with `/scaff:goal checkpoint`?
+     Task 3/7: CRDT sync engine... ✓ done
 
 You: /scaff:goal checkpoint
 AI:  ✓ docs/CHECKPOINT.md saved
@@ -261,13 +261,25 @@ AI:  CONTEXT.md ✓ | GOAL.md ✓ (3/5 complete)
      Resume with `/scaff:go`?
 ```
 
+### After a context compaction
+
+When the conversation gets compacted mid-work, just re-invoke the command:
+
+```
+You: /scaff:go
+AI:  GOAL.md ✓ (3/7 complete) — Task 4, Step 2/3
+     Resuming: conflict resolution in the CRDT sync engine.
+```
+
+Invoking a command re-injects its full text, so the rules and skill loads are restored rather than recalled from a summary. A mid-flight task resumes from its `— Step N/M` annotation instead of restarting. Use `/scaff:scout` instead if you want a state report first.
+
 ### Handling blockers
 
 When something comes up mid-goal that must be fixed first:
 
 ```
 You: (during Goal A) Let's fix this dependency bug first.
-AI:  Suggest: /scaff:goal suspend + /scaff:goal "Fix dependency bug"
+AI:  Suggest: /scaff:goal suspend + /scaff:goal init "Fix dependency bug"
 You: ok
 AI:  ✓ Goal A suspended to docs/suspended/goal-a/
      ✓ New GOAL.md created for the blocker.

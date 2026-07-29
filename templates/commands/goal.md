@@ -23,6 +23,8 @@ Manages `$DocsDir/GOAL.md`.
 
 `/scaff:goal <subcommand> [content]`
 
+`/scaff:goal <goal description>` — shorthand for `init` with that content.
+
 ## Subcommand Dispatch
 
 - (no subcommand given, `$DocsDir/GOAL.md` absent) => run init
@@ -33,6 +35,7 @@ Manages `$DocsDir/GOAL.md`.
 - (args = suspend) => see Subcommands: suspend
 - (args = resume) => see Subcommands: resume
 - (args = archive) => see Subcommands: archive
+- (args are free-text goal content — multi-word or quoted, not a subcommand keyword) => run init with that content
 - (otherwise) => report unknown subcommand and list available subcommands
 
 # Subcommands

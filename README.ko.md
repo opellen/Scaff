@@ -239,7 +239,7 @@ AI:  Task 3을 4개 서브태스크로 분해 완료 (3.1–3.4)
 You: /scaff:go
 AI:  Task 1/7: 프로젝트 초기화... ✓ done
      Task 2/7: 에디터 코어 구현... ✓ done
-     여러 태스크를 완료했습니다. `/scaff:goal checkpoint`로 진행 상황을 저장할까요?
+     Task 3/7: CRDT 동기화 엔진... ✓ done
 
 You: /scaff:goal checkpoint
 AI:  ✓ docs/CHECKPOINT.md 저장 완료
@@ -262,13 +262,25 @@ AI:  CONTEXT.md ✓ | GOAL.md ✓ (3/5 완료)
      `/scaff:go`로 이어서 진행할까요?
 ```
 
+### 컨텍스트 compact 이후
+
+작업 중 대화가 compact됐다면, 커맨드를 다시 입력하면 됩니다:
+
+```
+You: /scaff:go
+AI:  GOAL.md ✓ (3/7 완료) — Task 4, Step 2/3
+     이어서 진행: CRDT 동기화 엔진의 충돌 해소.
+```
+
+커맨드를 호출하면 그 전문이 다시 주입되므로, 요약에서 기억을 되살리는 게 아니라 규칙과 스킬 로드가 실제로 복원됩니다. 진행 중이던 태스크는 처음부터가 아니라 `— Step N/M` 표기 지점부터 이어집니다. 상태 보고를 먼저 보고 싶으면 `/scaff:scout`을 쓰면 됩니다.
+
 ### 블로커 대응
 
 골 진행 중 먼저 해결해야 할 일이 생겼을 때:
 
 ```
 You: (Goal A 진행 중) 이 의존성 버그 먼저 고치자.
-AI:  추천: /scaff:goal suspend + /scaff:goal "의존성 버그 수정"
+AI:  추천: /scaff:goal suspend + /scaff:goal init "의존성 버그 수정"
 You: ok
 AI:  ✓ Goal A를 docs/suspended/goal-a/로 중단 보관
      ✓ 블로커용 새 GOAL.md 생성
