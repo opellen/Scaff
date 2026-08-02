@@ -293,6 +293,17 @@ AI:  Goal A 복귀. `/scaff:go`로 이어서 진행할까요?
 
 중첩 블로커도 동일 패턴 — suspend가 쌓이고, 여러 골이 중단 중이면 resume이 목록을 보여줍니다.
 
+## 현장에서
+
+Scaff는 진행 중인 프로젝트들에서 매일 도그푸딩되고 있습니다:
+
+- [Seed Note](https://github.com/opellen/Seed-Note) — Android 구조적 블록 에디터 (Kotlin / Jetpack Compose)
+- [Hilo](https://github.com/opellen/Hilo) — Obsidian 하이라이트 플러그인
+- [Loft](https://github.com/opellen/Loft) — Obsidian 이미지 업로드 플러그인
+- [Screen Use](https://github.com/opellen/Screen-Use) — 결정적 앱 데모 레코더 (실제 앱을 구동해 녹화)
+- …그리고 여러 리버스엔지니어링 캠페인 — Scaff가 처음 고안된 도메인입니다.
+  목표를 잘게 쪼개고, 긴 호흡으로 협력해서 다뤄야 하는 곳이죠.
+
 ## **틈새**에서
 
 > **무거운 워크플로우가 항상 필요하지는 않았습니다.**
@@ -316,6 +327,13 @@ AI:  Goal A 복귀. `/scaff:go`로 이어서 진행할까요?
 > 때로는 Superpowers를 장착하기도 합니다.
 > 잘 하는 것들은 여전히 잘 활용하면 됩니다.
 > 완전함과 강력함의 앞에, 또는 그 사이에 놓일 수 있는 어떤 무엇이 필요했습니다.
+>
+> **시작은 앱 개발이 아니었습니다.**
+>
+> Scaff는 리버스엔지니어링 작업을 위해 고안됐습니다 — 목표는 거대하고, 길은 보이지 않고,
+> 미지를 사람과 AI가 주고받을 수 있는 작고 검증 가능한 걸음으로 쪼갤 수 있을 때만
+> 전진하는 캠페인들 말입니다.
+> Scaff가 쓰이는 다른 모든 곳은 그 형태를 물려받았습니다.
 
 ## Notation
 

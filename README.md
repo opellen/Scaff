@@ -292,6 +292,17 @@ AI:  Resumed: Goal A. Continue with /scaff:go?
 
 Nested blockers follow the same pattern — suspend stacks, resume presents a list when multiple goals are paused.
 
+## In the field
+
+Scaff is dogfooded daily across active projects:
+
+- [Seed Note](https://github.com/opellen/Seed-Note) — a structured block editor for Android (Kotlin / Jetpack Compose)
+- [Hilo](https://github.com/opellen/Hilo) — an Obsidian highlighting plugin
+- [Loft](https://github.com/opellen/Loft) — an Obsidian image upload plugin
+- [Screen Use](https://github.com/opellen/Screen-Use) — a deterministic app-demo recorder (drives a real app and records it)
+- …and several reverse-engineering campaigns — the domain Scaff was originally designed in,
+  where goals must be split fine and worked collaboratively across long horizons.
+
 ## From the **gap**
 
 > **Heavy workflows weren't always necessary.**
@@ -315,6 +326,13 @@ Nested blockers follow the same pattern — suspend stacks, resume presents a li
 > Sometimes I equip Superpowers.
 > What works well should still be used well.
 > I needed something that could sit in front of — or between — completeness and power.
+>
+> **It didn't start with app development.**
+>
+> Scaff was devised for reverse-engineering work — campaigns where the goal is huge,
+> the path is unknown, and progress only happens when you can split the unknown into
+> small, verifiable steps that a human and an AI can trade off.
+> Everything else it is used for inherited that shape.
 
 ## Notation
 
